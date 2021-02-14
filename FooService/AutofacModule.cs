@@ -27,14 +27,13 @@ namespace FooService
          // Register controllers
          containerBuilder
             .RegisterType<WeatherForecastController>()
-            .EnableClassInterceptors();
+            .EnableClassInterceptors()
+            .InterceptedBy(typeof(TransactionAspect));
 
          // Register services
          containerBuilder
             .RegisterType<ObservationService>()
-            .As<IObservationService>()
-            .EnableInterfaceInterceptors()
-            .InterceptedBy(typeof(TransactionAspect));
+            .As<IObservationService>();
 
          // Others
          containerBuilder
