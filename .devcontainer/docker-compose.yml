@@ -1,0 +1,21 @@
+version: '3.7'
+
+services:
+    fooservice:
+        container_name: fooservice-dev
+        build:
+            context: .
+        working_dir: /app
+        volumes:
+            - ..:/app:cached
+        command: >
+            bash -c "pwsh /app/.devcontainer/init.ps1 && pwsh /app/.devcontainer/setversion.ps1 && sleep infinity"
+
+    database:
+        container_name: fooservice-db
+        image: mcr.microsoft.com/mssql/server
+        environment:
+            - ACCEPT_EULA=Y
+            - SA_PASSWORD=PassWord42
+        ports:
+            - 7610:1433
