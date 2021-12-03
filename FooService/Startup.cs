@@ -32,7 +32,7 @@ namespace FooService
       }
 
       // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-      public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+      public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ISeeder seeder)
       {
          if (env.IsDevelopment())
          {
@@ -52,7 +52,9 @@ namespace FooService
             endpoints.MapControllers();
          });
 
-         var seeder = app.ApplicationServices.GetRequiredService<Seeder>();
+         // At this point the HTTP request pipeline configuration is complete.
+
+         // var seeder = app.ApplicationServices.GetRequiredService<Seeder>();
          seeder.Run();
       }
 

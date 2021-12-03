@@ -5,7 +5,12 @@ using FooService.DataAccess.Repositories;
 
 namespace FooService
 {
-   public class Seeder
+   public interface ISeeder
+   {
+      void Run();
+   }
+
+   public class Seeder : ISeeder
    {
       public Seeder(IRepository<ObservationEntity> observationRepository)
       {
@@ -16,11 +21,11 @@ namespace FooService
       {
          var now = DateTime.Now;
          var observations = _observationRepository.GetAll();
-         if(observations.Count(o => o.ObservedOn > now) < 24)
+         if (observations.Count(o => o.ObservedOn > now) < 24)
          {
             var observationCount = 6 * 4; // enough for 6 days
             var rng = new Random();
-            while(observationCount-- > 0)
+            while (observationCount-- > 0)
             {
                var date = DateTime.Now.AddHours(observationCount * 6);
                var observation = new ObservationEntity

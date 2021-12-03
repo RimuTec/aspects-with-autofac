@@ -43,7 +43,9 @@ namespace FooService
             .RegisterType<TransactionAspect>();
          containerBuilder
             .RegisterType<Seeder>()
-            .EnableClassInterceptors()
+            .As<ISeeder>()
+            // .EnableClassInterceptors()
+            .EnableInterfaceInterceptors()
             .InterceptedBy(typeof(TransactionAspect));
 
          var database = new Database(_configuration);
